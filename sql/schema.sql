@@ -1,0 +1,13 @@
+CREATE DATABASE IF NOT EXISTS car_sweepstakes;
+USE car_sweepstakes;
+
+CREATE TABLE IF NOT EXISTS participants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL,
+    referral_code VARCHAR(10) NOT NULL UNIQUE,
+    referred_by INT DEFAULT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (referred_by) REFERENCES participants(id) ON DELETE SET NULL
+);
