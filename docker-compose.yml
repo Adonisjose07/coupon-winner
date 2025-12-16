@@ -16,16 +16,25 @@ services:
       - SENDGRID_FROM_EMAIL=${SENDGRID_FROM_EMAIL}
     depends_on:
       - db
+    networks:
+      - dokploy-network
 
   db:
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: car_sweepstakes
     volumes:
       - db_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - dokploy-network
+      
+networks:
+  dokploy-network:
+    driver: bridge
 
 volumes:
   db_data:
